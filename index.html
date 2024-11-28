@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Grand Événement</title>
+    <style>
+        /* Fond Mystérieux */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #0a0a0a, #000);
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+        }
+
+        /* Conteneur Principal */
+        .circle-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(218, 218, 216, 0.1), transparent 60%);
+            box-shadow: 0 0 30px rgb(238, 236, 236), inset 0 0 15px rgba(255, 223, 128, 0.2);
+        }
+
+        /* Texte au Centre */
+        #countdown {
+            font-size: 2.5rem;
+            font-family: 'Georgia', serif;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(99, 99, 99, 0.8);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.9;
+            }
+        }
+
+        /* Premier Cercle (Lent) */
+        .circle-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-image: conic-gradient(
+                rgb(255, 255, 255),
+                rgba(94, 94, 94, 0.2),
+                rgb(255, 255, 255)
+            ) 1;
+            animation: spin-slow 10s linear infinite;
+        }
+
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Deuxième Cercle (Moyen) */
+        .circle-container::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-image: conic-gradient(
+                rgb(255, 255, 255),
+                rgb(92, 92, 92),
+                rgb(255, 255, 255)
+            ) 1;
+            animation: spin-medium 8s linear infinite reverse;
+        }
+
+        @keyframes spin-medium {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Troisième Cercle (Rapide) */
+        .third-circle {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            right: -30px;
+            bottom: -30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-image: conic-gradient(
+                rgb(255, 255, 255),
+                rgba(56, 56, 56, 0.2),
+                rgb(255, 255, 255)
+            ) 1;
+            animation: spin-fast 6s linear infinite;
+        }
+
+        @keyframes spin-fast {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .circle-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            #countdown {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="circle-container">
+        <div id="countdown">00:00:00</div>
+        <div class="third-circle"></div>
+    </div>
+
+    <script>
+        // Date cible : samedi 18 janvier 2025 à 20h
+        const countdownDate = new Date("2025-01-18T20:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").textContent =
+                `${days}j ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").textContent = "C'est l'heure !";
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
